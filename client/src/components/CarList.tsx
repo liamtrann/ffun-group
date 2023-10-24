@@ -32,7 +32,7 @@ const CarList = () => {
           <input
             type="text"
             className="form-control"
-            placeholder="Search by title"
+            placeholder="Search"
             value={searchCar}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setSearchCar(e.target.value)
