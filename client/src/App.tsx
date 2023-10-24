@@ -10,7 +10,7 @@ function App() {
   return (
     <div>
       <nav className="navbar navbar-expand navbar-dark bg-dark">
-        <Link to={"/cars"} className="navbar-brand">
+        <Link to={"/"} className="navbar-brand">
           Home
         </Link>
         <div className="navbar-nav mr-auto">
@@ -24,7 +24,7 @@ function App() {
 
       <div className="container mt-3">
         <Routes>
-          <Route path={"/cars"} element={<CarList />} />
+          <Route path={"/"} element={<CarList />} />
           <Route path="/add" element={<AddCar />} />
           <Route path="/car/:id" element={<Car />} />
         </Routes>

@@ -32,7 +32,7 @@ const Car = () => {
     if (sold) updateData = { ...updateData, status: "sold" };
     await axios
       .put(`/api/cars/${id}`, updateData)
-      .then((res) => navigate("/cars"))
+      .then((res) => navigate("/"))
       .catch((err) => console.warn(err));
   };
 

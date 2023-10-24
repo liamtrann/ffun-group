@@ -17,7 +17,7 @@ const AddCar = () => {
   const submitCar = async () => {
     await axios
       .post("/api/cars", addCar)
-      .then((response) => navigate("/cars"))
+      .then((response) => navigate("/"))
       .catch((err) => console.warn(err));
   };
 

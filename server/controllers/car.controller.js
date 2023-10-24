@@ -35,19 +35,19 @@ exports.create = (req, res) => {
 
 exports.findAll = (req, res) => {
   const searchTerm = req.query.search;
-  
+
   const whereCondition = {};
 
   if (searchTerm) {
     whereCondition[Op.or] = [
       {
         make: {
-          [Op.like]: `%${searchTerm}%`,
+          [Op.iLike]: `%${searchTerm}%`,
         },
       },
       {
         model: {
-          [Op.like]: `%${searchTerm}%`,
+          [Op.iLike]: `%${searchTerm}%`,
         },
       },
     ];
