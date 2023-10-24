@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op;
 // Create
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.title) {
+  if (!req.body.no) {
     res.status(400).send({
       message: "Content can not be empty!",
     });
@@ -35,15 +35,11 @@ exports.create = (req, res) => {
 
 exports.findAll = (req, res) => {
   const searchTerm = req.query.search;
+  
   const whereCondition = {};
 
   if (searchTerm) {
     whereCondition[Op.or] = [
-      {
-        no: {
-          [Op.like]: `%${searchTerm}%`,
-        },
-      },
       {
         make: {
           [Op.like]: `%${searchTerm}%`,
@@ -54,12 +50,21 @@ exports.findAll = (req, res) => {
           [Op.like]: `%${searchTerm}%`,
         },
       },
-      {
-        year: {
-          [Op.like]: `%${searchTerm}%`,
-        },
-      },
     ];
+    if (parseFloat(searchTerm)) {
+      whereCondition[Op.or].push(
+        {
+          no: {
+            [Op.eq]: parseFloat(searchTerm),
+          },
+        },
+        {
+          year: {
+            [Op.eq]: parseFloat(searchTerm),
+          },
+        }
+      );
+    }
   }
 
   Car.findAll({
@@ -114,46 +119,3 @@ exports.update = (req, res) => {
       });
     });
 };
-
-// Delete a Car with the specified id in the request
-exports.delete = (req, res) => {
-  const id = req.params.id;
-
-  Car.destroy({
-    where: { id: id },
-  })
-    .then((num) => {
-      if (num == 1) {
-        res.send({
-          message: "Car was deleted successfully!",
-        });
-      } else {
-        res.send({
-          message: `Cannot delete Car with id=${id}. Maybe Car was not found!`,
-        });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: "Could not delete Car with id=" + id,
-      });
-    });
-};
-
-// Delete all Cars from the database.
-exports.deleteAll = (req, res) => {
-  Car.destroy({
-    where: {},
-    truncate: false,
-  })
-    .then((nums) => {
-      res.send({ message: `${nums} Cars were deleted successfully!` });
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while removing all cars.",
-      });
-    });
-};
-
