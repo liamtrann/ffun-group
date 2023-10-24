@@ -96,7 +96,7 @@ const CarList = () => {
           </div>
         )}
       </table>
-      <div className="w-25 p-3">
+      <div className="w-75 p-3">
         <CarHistogram carStatus={allCars?.map((car) => car.status)} />
       </div>
     </div>
